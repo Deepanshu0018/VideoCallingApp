@@ -17,8 +17,47 @@ initSocket(server);
 
 const PORT = process.env.PORT || 8080;
 
+// Configure CORS for different environments
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Allow requests from:
+    // 1. GitHub Codespaces (any port on the same domain)
+    // 2. Localhost (for local development)
+    // 3. Production URLs
+    const allowedOrigins = [
+      'http://localhost:3000',
+      'http://localhost:5000',
+      'http://127.0.0.1:3000',
+      /github\.dev$/, // Allow all github.dev subdomains
+      'https://videocalling-backend-s5ek.onrender.com',
+    ];
+
+    // If no origin header (like in mobile apps), allow it
+    if (!origin) {
+      return callback(null, true);
+    }
+
+    // Check if origin matches allowed list
+    const isAllowed = allowedOrigins.some(allowed => {
+      if (allowed instanceof RegExp) {
+        return allowed.test(origin);
+      }
+      return allowed === origin;
+    });
+
+    if (isAllowed) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'), false);
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
+
 // Middleware 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json({ limit: "50kb" }));
 app.use(express.urlencoded({ extended: true, limit: "50kb" }));
 

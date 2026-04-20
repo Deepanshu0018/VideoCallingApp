@@ -1,96 +1,246 @@
+/* Global Styles */
+* {
+  box-sizing: border-box;
+}
+
+/* Landing Page */
 .landingPageContainer {
   width: 100vw;
-  height: 100vh;
-  background: url("/public/background.png");
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   background-repeat: no-repeat;
   background-size: cover;
   color: white;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
 }
 
 .landingPageContainer nav {
-  padding-inline: 1.2rem;
-  padding-block: 1.6rem;
+  padding: 1.6rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .landingPageContainer nav h2 {
   font-size: 1.8rem;
-  font-weight: 500;
+  font-weight: 600;
+  letter-spacing: -0.5px;
 }
 
 .landingPageContainer nav .navlist {
   display: flex;
-  gap: 1.6rem;
+  gap: 2rem;
   cursor: pointer;
+  align-items: center;
+}
 
+.landingPageContainer nav .navlist p,
+.landingPageContainer nav .navlist div {
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.landingPageContainer nav .navlist p:hover,
+.landingPageContainer nav .navlist div:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.landingPageContainer nav .navlist div {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.landingPageContainer nav .navlist div:hover {
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
 }
 
 .landingMainContainer {
   display: flex;
   justify-content: space-between;
-  padding-inline: 3rem;
-  height: 80vh;
+  padding: 3rem;
+  min-height: 80vh;
+  align-items: center;
+  gap: 2rem;
+}
+
+.landingMainContainer > div:nth-child(1) {
+  flex: 1;
+  z-index: 2;
+}
+
+.landingMainContainer > div:nth-child(1) h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+  letter-spacing: -1px;
+}
+
+.landingMainContainer > div:nth-child(1) p {
+  font-size: 1.3rem;
+  font-weight: 300;
+  margin-bottom: 2rem;
+  opacity: 0.95;
+}
+
+.landingMainContainer > div:nth-child(1) div[role='button'] {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  width: fit-content;
+  padding: 1.2rem 2.5rem;
+  border-radius: 12px;
+  margin-top: 1.9rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.landingMainContainer > div:nth-child(1) div[role='button']:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.landingMainContainer > div:nth-child(1) div[role='button'] a {
+  text-decoration: none;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.landingMainContainer > div:nth-child(2) {
+  flex: 1;
+  display: flex;
+  justify-content: center;
   align-items: center;
 }
 
-.landingMainContainer>div:nth-child(1) {
-  font-size: 2.2rem;
-}
-
-.landingMainContainer>div:nth-child(1) div[role='button'] {
-  background: #D97500;
-  width: fit-content;
-  padding: 1rem;
-  border-radius: 20px;
-  margin-top: 1.9rem;
-}
-
-.landingMainContainer>div:nth-child(1) div[role='button'] a {
-  text-decoration: none;
-  color: white;
-  font-size: 1.7rem;
-}
-
-.landingMainContainer>div:nth-child(2) img {
+.landingMainContainer > div:nth-child(2) img {
   height: 70vh;
   width: auto;
+  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.2));
 }
 
+/* Navigation Bar */
 .navBar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-inline: 20px;
-  text-align: center;
-
+  padding: 1.5rem 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  color: white;
 }
+
+.navBar h2 {
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  font-size: 1.5rem;
+}
+
+.navBar > div:last-child {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-weight: 500;
+}
+
+.navBar button {
+  background: rgba(255, 255, 255, 0.2) !important;
+  color: white !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  transition: all 0.3s ease !important;
+  font-weight: 600 !important;
+}
+
+.navBar button:hover {
+  background: rgba(255, 255, 255, 0.3) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Meeting Container */
 .meetContainer {
   display: flex;
-  padding-inline: 20px;
-  height: 80vh;
-  gap: 10vw;
+  padding: 3rem 2rem;
+  min-height: 80vh;
+  gap: 3rem;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to bottom, #f8f9ff 0%, #f0f2ff 100%);
+}
+
+.leftPanel {
+  flex: 1;
+  display: flex;
+  align-items: center;
   justify-content: center;
 }
 
+.leftPanel > div {
+  background: white;
+  padding: 3rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+}
 
+.leftPanel h2 {
+  color: #333;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  line-height: 1.3;
+}
 
-.leftPanel {
-  height: 100%;
+.leftPanel > div > div {
   display: flex;
-  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
 
+.leftPanel input {
+  border-radius: 8px !important;
+  font-size: 1rem !important;
+}
+
+.leftPanel button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: white !important;
+  font-weight: 600 !important;
+  padding: 0.875rem 2rem !important;
+  border-radius: 8px !important;
+  transition: all 0.3s ease !important;
+  text-transform: none !important;
+}
+
+.leftPanel button:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4) !important;
 }
 
 .rightPanel {
+  flex: 1;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .rightPanel > img {
   width: 30vw;
   height: auto;
-  border-radius: 20px;
+  border-radius: 16px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.rightPanel > img:hover {
+  transform: scale(1.02);
 }

@@ -1,0 +1,206 @@
+.historyContainer {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 0;
+}
+
+.historyHeader {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  color: white;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.historyHeader h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.5px;
+}
+
+.backButton {
+  transition: all 0.3s ease !important;
+}
+
+.backButton:hover {
+  background: rgba(255, 255, 255, 0.15) !important;
+  transform: translateY(-2px);
+}
+
+.historyContentWrapper {
+  padding: 2rem;
+  min-height: calc(100vh - 100px);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.historyGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.historyCard {
+  background: white !important;
+  border: none !important;
+  border-radius: 16px !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  overflow: hidden;
+}
+
+.historyCard:hover {
+  transform: translateY(-8px) !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15) !important;
+}
+
+.historyCardContent {
+  padding: 1.5rem !important;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.meetingCodeSection {
+  position: relative;
+}
+
+.codeLabel {
+  display: block;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.75rem;
+  color: #667eea !important;
+}
+
+.codeContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #f5f7ff;
+  padding: 1rem;
+  border-radius: 10px;
+  border: 2px solid #e0e7ff;
+  transition: all 0.3s ease;
+}
+
+.codeContainer:hover {
+  border-color: #667eea;
+  background: #eef2ff;
+}
+
+.meetingCode {
+  font-family: 'Courier New', monospace !important;
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+  color: #333 !important;
+  flex: 1;
+  word-break: break-all;
+  letter-spacing: 1px;
+}
+
+.copyButton {
+  color: #667eea !important;
+  transition: all 0.2s ease !important;
+}
+
+.copyButton:hover {
+  background: rgba(102, 126, 234, 0.1) !important;
+  color: #764ba2 !important;
+  transform: scale(1.1);
+}
+
+.copiedText {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  font-size: 0.75rem;
+  color: #10b981;
+  font-weight: 600;
+  margin-top: 0.5rem;
+  animation: fadeInOut 2s ease-in-out;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+}
+
+.dateInfo {
+  font-size: 0.95rem !important;
+  color: #666 !important;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+}
+
+.joinButton {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: white !important;
+  font-weight: 600 !important;
+  padding: 0.875rem 1.5rem !important;
+  border-radius: 10px !important;
+  text-transform: none !important;
+  transition: all 0.3s ease !important;
+  border: none !important;
+}
+
+.joinButton:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4) !important;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  color: white;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .historyGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .historyHeader {
+    padding: 1.5rem;
+  }
+
+  .historyHeader h1 {
+    font-size: 1.5rem;
+  }
+
+  .historyContentWrapper {
+    padding: 1rem;
+  }
+
+  .historyGrid {
+    gap: 1rem;
+  }
+}

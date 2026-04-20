@@ -32,7 +32,18 @@ export const AuthProvider = ({ children }) => {
       }
 
     } catch (err) {
-      console.error(err);
+      console.error("Registration error:", err);
+      // Provide better error messages
+      if (err.message === "Network Error") {
+        // eslint-disable-next-line no-throw-literal
+        throw {
+          response: {
+            data: {
+              message: "Cannot connect to server. Make sure the backend is running at " + server
+            }
+          }
+        };
+      }
       throw err;
     }
   };
@@ -59,7 +70,18 @@ export const AuthProvider = ({ children }) => {
       }
 
     } catch (err) {
-      console.error(err);
+      console.error("Login error:", err);
+      // Provide better error messages
+      if (err.message === "Network Error" || err.code === "ERR_NETWORK") {
+        // eslint-disable-next-line no-throw-literal
+        throw {
+          response: {
+            data: {
+              message: "Cannot connect to server. Make sure the backend is running at " + server
+            }
+          }
+        };
+      }
       throw err;
     }
   };

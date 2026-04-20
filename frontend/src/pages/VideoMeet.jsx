@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import io from "socket.io-client";
-import { Badge, IconButton, TextField, Button } from "@mui/material";
+// eslint-disable-next-line no-unused-vars
+import { Badge, IconButton, TextField, Button, Box, Paper, Typography, Card, CardContent } from "@mui/material";
 
 import VideocamIcon from "@mui/icons-material/Videocam";
 import VideocamOffIcon from "@mui/icons-material/VideocamOff";
@@ -8,6 +9,8 @@ import CallEndIcon from "@mui/icons-material/CallEnd";
 import MicIcon from "@mui/icons-material/Mic";
 import MicOffIcon from "@mui/icons-material/MicOff";
 import ChatIcon from "@mui/icons-material/Chat";
+import CloseIcon from "@mui/icons-material/Close";
+import SendIcon from "@mui/icons-material/Send";
 
 import styles from "../styles/videoComponent.module.css";
 import server from "../environment";
@@ -247,98 +250,129 @@ const sendMessage = () => {
 
   };
 
- //
-
-  return (
+return (
 
     <div>
 
       {askForUsername ? (
 
-        <div>
+        <Box className={styles.lobbyContainer}>
+          <Paper elevation={8} className={styles.lobbyCard}>
+            <Typography variant="h4" sx={{ fontWeight: 700, mb: 1, textAlign: 'center' }}>
+              Join Meeting
+            </Typography>
+            <Typography variant="body2" sx={{ mb: 3, textAlign: 'center', color: '#666' }}>
+              Enter your name to join the video call
+            </Typography>
 
-          <h2>Enter into Lobby</h2>
+            <Box sx={{ mb: 3, borderRadius: 2, overflow: 'hidden', boxShadow: '0 4px 15px rgba(0,0,0,0.1)' }}>
+              <video ref={localVideoref} autoPlay muted className={styles.lobbyPreview} />
+            </Box>
 
-          <TextField
-            label="Username"
-            value={username}
-            onChange={e => setUsername(e.target.value)}
-          />
+            <TextField
+              fullWidth
+              label="Your Name"
+              value={username}
+              onChange={e => setUsername(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && connect()}
+              placeholder="Enter your name"
+              sx={{
+                mb: 2,
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: 2,
+                }
+              }}
+            />
 
-          <Button variant="contained" onClick={connect}>
-            Connect
-          </Button>
-
-          <video ref={localVideoref} autoPlay muted />
-
-        </div>
+            <Button 
+              fullWidth
+              variant="contained" 
+              onClick={connect}
+              size="large"
+              sx={{
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                py: 1.5,
+                textTransform: 'none',
+                fontSize: '1rem',
+                fontWeight: 600,
+                borderRadius: 2,
+                transition: 'all 0.3s ease',
+                '&:hover': {
+                  transform: 'translateY(-2px)',
+                  boxShadow: '0 12px 35px rgba(102, 126, 234, 0.4)',
+                }
+              }}
+            >
+              Join Now
+            </Button>
+          </Paper>
+        </Box>
 
       ) : (
 
-        <div className={styles.meetVideoContainer}>
+        <Box className={styles.meetVideoContainer}>
 
           {showModal && (
+            <Card className={styles.chatRoom} elevation={8}>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2, pb: 2, borderBottom: '1px solid #eee' }}>
+                <Typography variant="h6" sx={{ fontWeight: 700, color: '#333' }}>
+                  Chat Messages
+                </Typography>
+                <IconButton size="small" onClick={() => setModal(false)}>
+                  <CloseIcon />
+                </IconButton>
+              </Box>
 
-            <div className={styles.chatRoom}>
-
-              <h2>Chat</h2>
-
-              <div className={styles.chatMessages}>
-
+              <Box className={styles.chatMessages}>
                 {messages.length ? (
-
                   messages.map((item, i) => (
-
-                    <div key={i}>
-                      <b>{item.sender}</b>
-                      <p>{item.data}</p>
-                    </div>
-
+                    <Box key={i} sx={{ mb: 1.5, pb: 1.5, borderBottom: '1px solid #f0f0f0', '&:last-child': { borderBottom: 'none' } }}>
+                      <Typography variant="caption" sx={{ fontWeight: 700, color: '#667eea' }}>
+                        {item.sender}
+                      </Typography>
+                      <Typography variant="body2" sx={{ mt: 0.5, color: '#333', wordBreak: 'break-word' }}>
+                        {item.data}
+                      </Typography>
+                    </Box>
                   ))
+                ) : (
+                  <Typography variant="body2" sx={{ color: '#999', textAlign: 'center', py: 3 }}>
+                    No messages yet
+                  </Typography>
+                )}
+              </Box>
 
-                ) : <p>No messages yet</p>}
-
-              </div>
-
-              <div className={styles.chatInput}>
-
+              <Box className={styles.chatInput}>
                 <TextField
+                  fullWidth
+                  size="small"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  label="Message"
+                  onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
+                  placeholder="Type a message..."
+                  sx={{
+                    '& .MuiOutlinedInput-root': {
+                      borderRadius: 1.5,
+                    }
+                  }}
                 />
-
-                <Button onClick={sendMessage}>
-                  Send
-                </Button>
-
-              </div>
-
-            </div>
-
+                <IconButton 
+                  onClick={sendMessage}
+                  size="small"
+                  sx={{ 
+                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    color: 'white',
+                    '&:hover': {
+                      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                      opacity: 0.85,
+                    }
+                  }}
+                >
+                  <SendIcon fontSize="small" />
+                </IconButton>
+              </Box>
+            </Card>
           )}
-
-          <div className={styles.buttonContainers}>
-
-            <IconButton onClick={handleVideo}>
-              {video ? <VideocamIcon /> : <VideocamOffIcon />}
-            </IconButton>
-
-            <IconButton onClick={handleEndCall} style={{ color: "red" }}>
-              <CallEndIcon />
-            </IconButton>
-
-            <IconButton onClick={handleAudio}>
-              {audio ? <MicIcon /> : <MicOffIcon />}
-            </IconButton>
-
-            <Badge badgeContent={newMessages} color="error">
-              <IconButton onClick={() => setModal(!showModal)}>
-                <ChatIcon />
-              </IconButton>
-            </Badge>
-
-          </div>
 
           <video
             className={styles.meetUserVideo}
@@ -347,23 +381,85 @@ const sendMessage = () => {
             muted
           />
 
-          <div className={styles.conferenceView}>
-
+          <Box className={styles.conferenceView}>
             {videos.map(video => (
-
-              <video
-                key={video.socketId}
-                ref={ref => {
-                  if (ref && video.stream) ref.srcObject = video.stream;
-                }}
-                autoPlay
-              />
-
+              <Box key={video.socketId} className={styles.videoWrapper}>
+                <video
+                  ref={ref => {
+                    if (ref && video.stream) ref.srcObject = video.stream;
+                  }}
+                  autoPlay
+                />
+              </Box>
             ))}
+          </Box>
 
-          </div>
+          <Box className={styles.buttonContainers}>
+            <Box className={styles.controlsBox}>
+              <IconButton 
+                onClick={handleVideo}
+                className={styles.controlButton}
+                sx={{
+                  background: video ? '#667eea' : '#ff4444',
+                  color: 'white',
+                  '&:hover': { opacity: 0.85 },
+                  transition: 'all 0.3s ease',
+                }}
+                title={video ? "Turn off camera" : "Turn on camera"}
+              >
+                {video ? <VideocamIcon /> : <VideocamOffIcon />}
+              </IconButton>
 
-        </div>
+              <IconButton 
+                onClick={handleAudio}
+                className={styles.controlButton}
+                sx={{
+                  background: audio ? '#667eea' : '#ff4444',
+                  color: 'white',
+                  '&:hover': { opacity: 0.85 },
+                  transition: 'all 0.3s ease',
+                }}
+                title={audio ? "Turn off microphone" : "Turn on microphone"}
+              >
+                {audio ? <MicIcon /> : <MicOffIcon />}
+              </IconButton>
+
+              <Badge badgeContent={newMessages} color="error" sx={{ '& .MuiBadge-badge': { background: '#f5576c', fontWeight: 700 } }}>
+                <IconButton 
+                  onClick={() => setModal(!showModal)}
+                  className={styles.controlButton}
+                  sx={{
+                    background: '#764ba2',
+                    color: 'white',
+                    '&:hover': { opacity: 0.85 },
+                    transition: 'all 0.3s ease',
+                  }}
+                  title="Open chat"
+                >
+                  <ChatIcon />
+                </IconButton>
+              </Badge>
+
+              <IconButton 
+                onClick={handleEndCall}
+                className={styles.controlButton}
+                sx={{
+                  background: '#f5576c',
+                  color: 'white',
+                  '&:hover': { 
+                    background: '#e63946',
+                    opacity: 0.85,
+                  },
+                  transition: 'all 0.3s ease',
+                }}
+                title="End call"
+              >
+                <CallEndIcon />
+              </IconButton>
+            </Box>
+          </Box>
+
+        </Box>
 
       )}
 
